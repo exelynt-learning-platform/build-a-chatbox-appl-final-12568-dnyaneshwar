@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUserMessage, fetchAIResponse } from "../features/chat/chatSlice";
+import { sendMessage } from "../features/chat/chatSlice";
 import Message from "./Message";
 import Loader from "./Loader";
 
@@ -13,10 +13,7 @@ const ChatBox = () => {
   const handleSend = () => {
     if (!input.trim()) return;
 
-    const updatedMessages = [...messages, { role: "user", content: input }];
-
-    dispatch(addUserMessage(input));
-    dispatch(fetchAIResponse(updatedMessages));
+    dispatch(sendMessage(input)); // ✅ single action
 
     setInput("");
   };
@@ -34,7 +31,6 @@ const ChatBox = () => {
 
       <div className="input-box">
         <input
-          type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message..."
